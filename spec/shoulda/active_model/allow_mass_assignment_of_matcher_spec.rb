@@ -101,5 +101,21 @@ describe Shoulda::Matchers::ActiveModel::AllowMassAssignmentOfMatcher do
         @model.should allow_mass_assignment_of(:attr).as(:admin)
       end
     end
+
+    it "provides the correct description without a role being used" do
+      matcher = allow_mass_assignment_of(:attr)
+      matcher.description.should == 'allow mass assignment of attr'
+    end
+
+    it "provides the correct description including a role being used" do
+      matcher = allow_mass_assignment_of(:attr).as(:admin)
+      matcher.description.should == 'allow mass assignment of attr for admin role'
+    end
+
   end
+
+
+
+
 end
+

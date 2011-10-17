@@ -58,7 +58,11 @@ module Shoulda # :nodoc:
         attr_reader :failure_message, :negative_failure_message
 
         def description
-          "allow mass assignment of #{@attribute}"
+          description = "allow mass assignment of #{@attribute}"
+          if rails_3_1?
+            description << " for #{@role} role" if role_used?
+          end
+          description
         end
 
         private
@@ -94,7 +98,12 @@ module Shoulda # :nodoc:
         def rails_3_1?
           ::ActiveModel::VERSION::MAJOR == 3 && ::ActiveModel::VERSION::MINOR >= 1
         end
+
+        def role_used?
+          @role != :default && !@role.blank?
+        end
       end
     end
   end
 end
+
